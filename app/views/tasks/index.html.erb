@@ -31,5 +31,5 @@
 
 <h2>Tags</h2>
 <% @tags.each do |tag| %>
-  <p><%= link_to "[X]", tag, method: :delete %> <%= link_to tag.name, tag %></p>
+  <p><%= link_to "[X]", tag, method: :delete, data: { confirm: 'Are you sure?' } %> <%= link_to tag.name, tag %></p>
 <% end %>
