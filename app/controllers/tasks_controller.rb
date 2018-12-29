@@ -3,6 +3,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.all
+    @tags = Tag.all
   end
 
   # GET /tasks/1
@@ -19,13 +20,14 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
+
   end
 
   # POST /tasks
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task
+      redirect_to tasks_path
     else 
       render 'new' 
     end
@@ -36,7 +38,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      redirect_to @task
+      redirect_to tasks_path
     else
       render 'edit'
     end
@@ -52,6 +54,6 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:title, :remarks)
+      params.require(:task).permit(:title, :remarks, :tag_ids => [])
     end
 end

@@ -2,20 +2,34 @@
 
 <table>
   <tr>
-    <th>Tasks</th>
+    <th></th>
+    <th>Task</th>
     <th colspan="2"></th>
+    <th>Tags</th>
   </tr>
  
   <% @tasks.each do |task| %>
     <tr>
-      <td><%= task.title %></td>
-      <td><%= link_to 'Show', task_path(task) %></td>
+      <td><%= link_to '[+]BUTTON TODO', task %></td>
+      <td><strong><%= task.title %></strong></td>
       <td><%= link_to 'Edit', edit_task_path(task) %></td>
-      <td><%= link_to 'Delete', task_path(task), 
+      <td><%= link_to 'Delete', task, 
               method: :delete, 
               data: {confirm: 'Are you sure?'} %></td>
+      <td>
+        <% task.tags.each do |tag| %>
+          <%= link_to tag.name, tag %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to "Add Task", new_task_path %>
+
+<br><%= link_to "Add Task", new_task_path %>
+<br><%= link_to "New Tag", new_tag_path %>
+
+<h2>Tags</h2>
+<% @tags.each do |tag| %>
+  <p><%= link_to "[X]", tag, method: :delete %> <%= link_to tag.name, tag %></p>
+<% end %>
