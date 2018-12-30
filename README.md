@@ -1,5 +1,5 @@
 # README
 
-* Thing
+* Chong Chee Yuan
 
-* Other thing
+* A0182546Y
