@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  document.forms[0].elements.commit.onclick = () => alert('Click!');
+</script>
+
 <% if @task.errors.any? %>
   <div id="error_explanation">
     <h2>
