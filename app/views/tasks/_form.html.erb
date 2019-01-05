@@ -26,7 +26,7 @@
 
   <p>
     <%= form.label :tags %>
-    <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name) %>
+    <%= form.collection_check_boxes(:tag_ids, @current_user.tags, :id, :name) %>
   </p>
   <p>
     <%= form.submit %>
