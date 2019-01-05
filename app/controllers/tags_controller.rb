@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   # GET /tags
   def index
-    @tags = Tag.all
+    @tags = @current_user.tags
   end
 
   # GET /tags/1
@@ -49,6 +49,6 @@ class TagsController < ApplicationController
 
   private
     def tag_params
-      params.require(:tag).permit(:name)
+      params.require(:tag).permit(:name).merge(user_id: @current_user.id)
     end
 end

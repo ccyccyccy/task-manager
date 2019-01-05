@@ -2,8 +2,8 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
-    @tags = Tag.all
+    @tasks = @current_user.tasks
+    @tags = @current_user.tags
   end
 
   # GET /tasks/1
@@ -54,6 +54,6 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:title, :remarks, :tag_ids => [])
+      params.require(:task).permit(:title, :remarks, :tag_ids => []).merge(user_id: @current_user.id)
     end
 end
