@@ -7,6 +7,7 @@ class TagsController < ApplicationController
   # GET /tags/1
   def show
     @tag = Tag.find(params[:id])
+    authenticate_user
   end
 
   # GET /tags/new
@@ -17,6 +18,7 @@ class TagsController < ApplicationController
   # GET /tags/1/edit
   def edit
     @tag = Tag.find(params[:id])
+    authenticate_user
   end
 
   # POST /tags
@@ -43,6 +45,7 @@ class TagsController < ApplicationController
   # DELETE /tags/1
   def destroy
     @tag = Tag.find(params[:id])
+    authenticate_user
     @tag.destroy
     redirect_to :tasks
   end
@@ -50,5 +53,9 @@ class TagsController < ApplicationController
   private
     def tag_params
       params.require(:tag).permit(:name).merge(user_id: @current_user.id)
+    end
+
+    def authenticate_user
+      redirect_to root_path if @current_user.id != @tag.user_id
     end
 end

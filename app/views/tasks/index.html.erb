@@ -9,8 +9,8 @@
   </tr>
  
   <% @tasks.each do |task| %>
-    <tr>
-      <td><%= link_to '[+]BUTTON TODO', task %></td>
+    <tr id=<%= task.id %>>
+      <td class="expand_link" task_id="<%= task.id %>"><a href='javascript:void(0)'>[+]</a></td>
       <td><strong><%= task.title %></strong></td>
       <td><%= link_to 'Edit', edit_task_path(task) %></td>
       <td><%= link_to 'Delete', task, 
@@ -27,9 +27,47 @@
 
 
 <br><%= link_to "Add Task", new_task_path %>
-<br><%= link_to "New Tag", new_tag_path %>
 
 <h2>Tags</h2>
 <% @tags.each do |tag| %>
   <p><%= link_to "[X]", tag, method: :delete, data: { confirm: 'Are you sure?' } %> <%= link_to tag.name, tag %></p>
 <% end %>
+
+<br><%= link_to "New Tag", new_tag_path %>
+
+<script>
+  let expand_links = document.querySelectorAll('.expand_link');
+
+  expand_links.forEach(
+    function(expand_link) {
+      expand_link.addEventListener('click', expand, false);
+    });
+
+  function expand(event) {
+    this.childNodes[0].innerHTML = '[-]';
+    let id = this.getAttribute('task_id');
+    Rails.ajax({
+      type: "GET",
+      url: "/tasks/" + id,
+      success: (response) => {
+        let newrow = document.createElement('tr');
+        let emptycell1 = document.createElement('td');
+        let cell = document.createElement('td');
+        newrow.appendChild(emptycell1);
+        newrow.appendChild(cell);
+        cell.innerHTML = response;
+        this.parentNode.parentNode.insertBefore(newrow, this.parentNode.nextSibling);
+      },
+      error: function(response){return 'ERROR';}
+    });
+    this.removeEventListener('click', expand, false);
+    this.addEventListener('click', hide, false);
+  }
+
+  function hide(event) {
+    this.childNodes[0].innerHTML = '[+]';
+    this.parentNode.parentNode.removeChild(this.parentNode.nextSibling);
+    this.removeEventListener('click', hide, false);
+    this.addEventListener('click', expand, false);
+  }
+</script>

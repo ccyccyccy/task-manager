@@ -10,6 +10,8 @@ class TasksController < ApplicationController
   # GET /tasks/1.json
   def show
     @task = Task.find(params[:id])
+    authenticate_user
+    render plain: @task.remarks;
   end
 
   # GET /tasks/new
@@ -20,6 +22,7 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
+    authenticate_user
   end
 
   # POST /tasks
@@ -46,6 +49,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task = Task.find(params[:id])
+    authenticate_user
     @task.destroy
 
     redirect_to tasks_path
@@ -54,5 +58,9 @@ class TasksController < ApplicationController
   private
     def task_params
       params.require(:task).permit(:title, :remarks, :tag_ids => []).merge(user_id: @current_user.id)
+    end
+
+    def authenticate_user
+      redirect_to root_path if @current_user.id != @task.user_id
     end
 end
