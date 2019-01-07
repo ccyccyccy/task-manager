@@ -6,8 +6,11 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    authenticate_user
-    render plain: @task.remarks
+    if authenticate_user
+      render plain: @task.remarks 
+    else
+      redirect_to tasks_path
+    end
   end
 
   def new
@@ -16,7 +19,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    authenticate_user
+    redirect_to tasks_path if !authenticate_user
   end
 
   def create
@@ -31,18 +34,20 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    if @task.update(task_params)
-      redirect_to tasks_path
+    if authenticate_user
+      if @task.update(task_params)
+        redirect_to tasks_path
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      redirect_to tasks_path
     end
   end
 
   def destroy
     @task = Task.find(params[:id])
-    authenticate_user
-    @task.destroy
-
+    @task.destroy if authenticate_user
     redirect_to tasks_path
   end
 
@@ -52,6 +57,6 @@ class TasksController < ApplicationController
     end
 
     def authenticate_user
-      redirect_to root_path if @current_user.id != @task.user_id
+      return @current_user.id == @task.user_id
     end
 end
