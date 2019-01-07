@@ -1,28 +1,33 @@
 <h1>Task Manager</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th>Task</th>
-    <th colspan="2"></th>
-    <th>Tags</th>
-  </tr>
- 
-  <% @tasks.each do |task| %>
-    <tr id=<%= task.id %>>
-      <td class="expand_link" task_id="<%= task.id %>"><a href='javascript:void(0)'>[+]</a></td>
-      <td><strong><%= task.title %></strong></td>
-      <td><%= link_to 'Edit', edit_task_path(task) %></td>
-      <td><%= link_to 'Delete', task, 
-              method: :delete, 
-              data: {confirm: 'Are you sure?'} %></td>
-      <td>
-        <% task.tags.each do |tag| %>
-          <%= link_to tag.name, tag %>
-        <% end %>
-      </td>
+<table id="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Task</th>
+      <th colspan="2"></th>
+      <th>Tags</th>
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr data-task-id="<%= task.id %>">
+        <td class="expand_link"><a href='javascript:void(0)'>[+]</a></td>
+        <td><strong><%= task.title %></strong></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Delete', task, 
+                method: :delete, 
+                data: {confirm: 'Are you sure?'} %></td>
+        <td>
+          <% task.tags.each do |tag| %>
+            <%= link_to tag.name, tag %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 
@@ -34,40 +39,3 @@
 <% end %>
 
 <br><%= link_to "New Tag", new_tag_path %>
-
-<script>
-  let expand_links = document.querySelectorAll('.expand_link');
-
-  expand_links.forEach(
-    function(expand_link) {
-      expand_link.addEventListener('click', expand, false);
-    });
-
-  function expand(event) {
-    this.childNodes[0].innerHTML = '[-]';
-    let id = this.getAttribute('task_id');
-    Rails.ajax({
-      type: "GET",
-      url: "/tasks/" + id,
-      success: (response) => {
-        let newrow = document.createElement('tr');
-        let emptycell1 = document.createElement('td');
-        let cell = document.createElement('td');
-        newrow.appendChild(emptycell1);
-        newrow.appendChild(cell);
-        cell.innerHTML = response;
-        this.parentNode.parentNode.insertBefore(newrow, this.parentNode.nextSibling);
-      },
-      error: function(response){return 'ERROR';}
-    });
-    this.removeEventListener('click', expand, false);
-    this.addEventListener('click', hide, false);
-  }
-
-  function hide(event) {
-    this.childNodes[0].innerHTML = '[+]';
-    this.parentNode.parentNode.removeChild(this.parentNode.nextSibling);
-    this.removeEventListener('click', hide, false);
-    this.addEventListener('click', expand, false);
-  }
-</script>

@@ -9,4 +9,5 @@ class ApplicationController < ActionController::Base
     @current_user = User.create
     session[:user_id] = @current_user.id
   end
+
 end

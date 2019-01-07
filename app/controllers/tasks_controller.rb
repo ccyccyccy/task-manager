@@ -1,31 +1,24 @@
 class TasksController < ApplicationController
-  # GET /tasks
-  # GET /tasks.json
   def index
     @tasks = @current_user.tasks
     @tags = @current_user.tags
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
   def show
     @task = Task.find(params[:id])
     authenticate_user
-    render plain: @task.remarks;
+    render plain: @task.remarks
   end
 
-  # GET /tasks/new
   def new
     @task = Task.new
   end
 
-  # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
     authenticate_user
   end
 
-  # POST /tasks
   def create
     @task = Task.new(task_params)
     if @task.save
@@ -35,7 +28,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
   def update
     @task = Task.find(params[:id])
 
@@ -46,7 +38,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
   def destroy
     @task = Task.find(params[:id])
     authenticate_user
