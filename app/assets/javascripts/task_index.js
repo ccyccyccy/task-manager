@@ -1,20 +1,25 @@
-document.addEventListener("DOMContentLoaded", function() {
-  let toggle_links = document.querySelectorAll('td.toggle_link');
-  let table_body = document.querySelector('#table > tbody');
+$( document ).ready(function() {
+  $(".editable").keydown(function(event) {
+    if(event.which === 13) {
+      event.preventDefault();
+      let id = $(this).closest('tr')[0].id;
+    } else {}
+  });
 
-  toggle_links.forEach(
-    function(toggle_link) {
-      toggle_link.addEventListener('click', toggle, false);
-    });
+  let toggle_links = $('td.toggle_link');
+  let table_body = $('#table > tbody');
+
+  toggle_links.click(toggle);
 
   // insert/remove new row with details on task
   function toggle(event) {
-    let link = this.childNodes[0]; // link is the <a> tag
-    let id = this.parentNode.getAttribute('data-task-id');
-    let parentRow = this.parentNode;
+    let link = $(this).find('a'); // link is the <a> tag
+    let parentRow = $(this).closest('tr');
+    let id = parentRow.attr('id');
+    console.log(id);
 
-    if(link.innerHTML === '[+]') {
-      link.innerHTML = '[-]';
+    if(link.html() === '[+]') {
+      link.html('[-]');
       Rails.ajax({
         type: "GET",
         url: "/tasks/" + id,
@@ -22,19 +27,18 @@ document.addEventListener("DOMContentLoaded", function() {
         error: function(response){alert( 'ERROR! Task not found' );}
       });
     } else {
-      link.innerHTML = '[+]';
-      table_body.removeChild(parentRow.nextElementSibling);
+      link.html('[+]');
+      parentRow.next().remove();
     }
 
+    // format response into new row and append to parentRow
     function addRow(response) {
-      let newrow = document.createElement('tr');
-      let emptycell = document.createElement('td');
-      let cell = document.createElement('td');
-      newrow.appendChild(emptycell);
-      newrow.appendChild(cell);
-      cell.innerHTML = response;
-      table_body.insertBefore(newrow, parentRow.nextElementSibling);
+      let newrow = `
+        <tr>
+          <td></td>
+          <td>` + response + `</td>
+        </tr>`;
+      parentRow.after(newrow);
     }
-
   }
 });
