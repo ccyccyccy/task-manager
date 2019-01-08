@@ -1,15 +1,22 @@
 $( document ).ready(function() {
-  $(".editable").keydown(function(event) {
+
+  let toggle_links = $('td.toggle_link');
+  let editables = $(".editable");
+
+  toggle_links.click(toggle);
+
+  editables.keydown(function(event) {
     if(event.which === 13) {
       event.preventDefault();
-      let id = $(this).closest('tr')[0].id;
+      submit_field($(this));
     } else {}
   });
 
-  let toggle_links = $('td.toggle_link');
-  let table_body = $('#table > tbody');
-
-  toggle_links.click(toggle);
+  // Takes jquery object with form child and submit
+  function submit_field(field) {
+     let form = field.find('form');
+     Rails.fire(form[0], 'submit');
+  }
 
   // insert/remove new row with details on task
   function toggle(event) {
