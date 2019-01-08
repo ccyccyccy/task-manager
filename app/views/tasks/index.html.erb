@@ -15,7 +15,7 @@
         <td class="task_title">
           <div class="editable" style="display:inline-block">
             <%= form_with model: task, remote: true do |form| %>
-              <%= form.text_field :title ,onblur: "Rails.fire(form, 'submit');"%>
+              <%= form.text_field :title, id: task.id %>
             <% end %>
           </div>
           <%= link_to 'Edit', edit_task_path(task) %>

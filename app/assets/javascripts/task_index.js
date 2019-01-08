@@ -1,30 +1,13 @@
 $( document ).ready(function() {
 
   let toggle_links = $('td.toggle_link');
-  let editables = $(".editable");
-
-  toggle_links.click(toggle);
-
-  editables.keydown(function(event) {
-    if(event.which === 13) {
-      event.preventDefault();
-      submit_field($(this));
-    } else {}
-  });
-
-  // Takes jquery object with form child and submit
-  function submit_field(field) {
-     let form = field.find('form');
-     Rails.fire(form[0], 'submit');
-  }
+  let input_fields = $("input[name*='task[title]']");
 
   // insert/remove new row with details on task
   function toggle(event) {
     let link = $(this).find('a'); // link is the <a> tag
     let parentRow = $(this).closest('tr');
     let id = parentRow.attr('id');
-    console.log(id);
-
     if(link.html() === '[+]') {
       link.html('[-]');
       Rails.ajax({
@@ -48,4 +31,25 @@ $( document ).ready(function() {
       parentRow.after(newrow);
     }
   }
+
+  // given input_element, find parent form and submit it
+  function submit_ajax(input_element) {
+    let form = input_element.closest('form');
+    Rails.fire(form[0], 'submit');
+  }
+
+  toggle_links.click(toggle);
+
+  input_fields.keydown(function(event) {
+    if(event.which === 13) {
+      event.preventDefault();
+      submit_ajax($(this));
+    } else {}
+  });
+
+  $(document).on('blur', "input[name*='task[title]']", function(event) {
+    submit_ajax($(this));
+  });
+
+
 });

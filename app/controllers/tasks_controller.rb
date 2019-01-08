@@ -33,15 +33,8 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-
     if authenticate_user
-      if @task.update(task_params)
-        redirect_to tasks_path
-      else
-        render 'edit'
-      end
-    else
-      redirect_to tasks_path
+      @task.update(task_params)
     end
   end
 
