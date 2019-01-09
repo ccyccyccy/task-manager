@@ -1,13 +1,14 @@
 
 $( document ).on('turbolinks:load', function() {
-  let toggle_links = $('td.toggle_link');
-  let input_fields = $(".in_place_changable");
+  let toggle_links = $('.toggle_link');
+  // let input_fields = $(".in_place_changable");
 
   // insert/remove new row with details on task
   function toggle(event) {
-    let link = $(this).find('a'); // link is the <a> tag
+    let link = $(this); // link is the <a> tag
     let parentRow = $(this).closest('tr');
     let id = parentRow.attr('id');
+    let hiddenrow = $('#hidden_task_' + id);
     if(link.html() === '[+]') {
       link.html('[-]');
       Rails.ajax({
@@ -18,17 +19,12 @@ $( document ).on('turbolinks:load', function() {
       });
     } else {
       link.html('[+]');
-      parentRow.next().remove();
+      hiddenrow.html('');
     }
 
-    // format response into new row and append to parentRow
+    // add content to hidden row
     function addRow(response) {
-      let newrow = `
-        <tr>
-          <td></td>
-          <td>` + response + `</td>
-        </tr>`;
-      parentRow.after(newrow);
+      hiddenrow.html('<td colspan="3"</td><td>' + response + '</td>');
     }
   }
 
