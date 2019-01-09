@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+
   let toggle_links = $('td.toggle_link');
   let input_fields = $("input[name*='task[title]']");
 
@@ -50,6 +51,5 @@ $( document ).ready(function() {
   $(document).on('blur', "input[name*='task[title]']", function(event) {
     submit_ajax($(this));
   });
-
 
 });

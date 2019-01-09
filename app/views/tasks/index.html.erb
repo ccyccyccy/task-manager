@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @tasks.each do |task| %>
+    <% @tasks.order(cookies[:sort_order]).each do |task| %>
       <tr id="<%= task.id %>">
         <td class="toggle_link"><a href='javascript:void(0)'>[+]</a></td>
         <td class="task_title">
@@ -18,7 +18,6 @@
               <%= form.text_field :title, id: task.id %>
             <% end %>
           </div>
-          <%= link_to 'Edit', edit_task_path(task) %>
           <%= link_to 'Delete', task, 
                 method: :delete, 
                 data: {confirm: 'Are you sure?'} %>
