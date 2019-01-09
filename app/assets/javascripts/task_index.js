@@ -1,8 +1,8 @@
-$( document ).ready(function() {
 
-
+$( document ).on('turbolinks:load', function() {
   let toggle_links = $('td.toggle_link');
-  let input_fields = $("input[name*='task[title]']");
+  let input_fields = $(".in_place_changable");
+  console.log(input_fields.length);
 
   // insert/remove new row with details on task
   function toggle(event) {
@@ -48,8 +48,7 @@ $( document ).ready(function() {
     } else {}
   });
 
-  $(document).on('blur', "input[name*='task[title]']", function(event) {
+  input_fields.blur(function(event) {
     submit_ajax($(this));
   });
-
 });

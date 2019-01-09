@@ -15,7 +15,7 @@
         <td class="task_title">
           <div class="editable" style="display:inline-block">
             <%= form_with model: task, remote: true do |form| %>
-              <%= form.text_field :title, id: task.id %>
+              <%= form.text_field :title, id: task.id, class: 'in_place_changable' %>
             <% end %>
           </div>
           <%= link_to 'Delete', task, 
