@@ -2,7 +2,6 @@
 $( document ).on('turbolinks:load', function() {
   let toggle_links = $('td.toggle_link');
   let input_fields = $(".in_place_changable");
-  console.log(input_fields.length);
 
   // insert/remove new row with details on task
   function toggle(event) {
@@ -34,21 +33,21 @@ $( document ).on('turbolinks:load', function() {
   }
 
   // given input_element, find parent form and submit it
-  function submit_ajax(input_element) {
-    let form = input_element.closest('form');
-    Rails.fire(form[0], 'submit');
-  }
+  // function submit_ajax(input_element) {
+  //   let form = input_element.closest('form');
+  //   Rails.fire(form[0], 'submit');
+  // }
 
   toggle_links.click(toggle);
 
-  input_fields.keydown(function(event) {
-    if(event.which === 13) {
-      event.preventDefault();
-      submit_ajax($(this));
-    } else {}
-  });
+  // input_fields.keydown(function(event) {
+  //   if(event.which === 13) {
+  //     event.preventDefault();
+  //     submit_ajax($(this));
+  //   } else {}
+  // });
 
-  input_fields.blur(function(event) {
-    submit_ajax($(this));
-  });
+  // input_fields.blur(function(event) {
+  //   submit_ajax($(this));
+  // });
 });
