@@ -7,4 +7,10 @@ module TasksHelper
   def click_title_order
     return @sort_order == 'title asc' ? 'title desc' : 'title asc'
   end
+
+  def get_tags(task)
+    return task.tags.order(:name).collect do |tag|
+      link_to tag.name, tag
+    end.join(" ")
+  end
 end

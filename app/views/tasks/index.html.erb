@@ -1,5 +1,9 @@
 <h1>Task Manager</h1>
 
+<a href="javascript:void(0)" class="toggle_new">Add Task</a>
+<div class="new_task_container">
+  <%= render 'form', task: Task.new %>
+</div>
 <table id="table">
   <thead>
     <tr>
@@ -8,31 +12,40 @@
       <th><%= link_to 'Created At', tasks_path(sort_order: click_date_order) %></th>
     </tr>
   </thead>
-  <tbody>
-    <% @tasks.order(@sort_order).each do |task| %>
-      <tr id="<%= task.id %>">
-        <td><%= link_to 'Edit', edit_task_path(task), remote: true %></td>
+  <% @tasks.order(@sort_order).each do |task| %>
+    <tbody id="<%= task.id %>">
+      <tr class="task_overview">
+        <td><a href="javascript:void(0)" class="toggle_edit">Edit</a></td>
         <td><%= link_to 'Delete', task, 
                 remote: true,
                 method: :delete, 
                 data: {confirm: 'Are you sure?'} %></td>
-        <td><a href='javascript:void(0)' class="toggle_link">[+]</a></td>
-        <td class="task_title">
-          <%= task.title %>
+        <td><a href='javascript:void(0)' class="toggle_expand">[+]</a></td>
+        <td>
+          <span class="task_title"><%= task.title %></span>
           Tags:
-          <% task.tags.order(:name).each do |tag| %>
-            <%= link_to tag.name, tag %>
-          <% end %>
+          <span class="task_tags">
+            <%== get_tags task %>
+          </span>
         </td>
         <td class="date"><%= local_time(task.created_at) %></td>  
       </tr>
-      <tr id="hidden_task_<%= task.id %>"></tr>
-    <% end %>
-  </tbody>
+      <tr class="remarks hidden">
+        <td colspan="3"></td>
+        <td>
+          <span class="task_remarks"><%= task.remarks %></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="42">
+          <%# render partial: "form", locals: { full: true } or render "form", full: true %>
+          <%# they are the same %>
+          <%= render "form", task: task %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
 </table>
-
-
-<br><%= link_to "Add Task", new_task_path, remote: true %>
 
 <h2>Tags</h2>
 <% @tags.each do |tag| %>
@@ -40,6 +53,3 @@
 <% end %>
 
 <br><%= link_to "New Tag", new_tag_path %>
-
-<h1>TEST BELOW</h1>
-<div id="task-form" style="display:none;"></div>

@@ -1,49 +1,46 @@
-
-$( document ).on('turbolinks:load', function() {
-  let toggle_links = $('.toggle_link');
-  // let input_fields = $(".in_place_changable");
-
-  // insert/remove new row with details on task
-  function toggle(event) {
+$( document ).on("turbolinks:load", function() {
+  function toggle_remark(event) {
     let link = $(this); // link is the <a> tag
-    let parentRow = $(this).closest('tr');
-    let id = parentRow.attr('id');
-    let hiddenrow = $('#hidden_task_' + id);
-    if(link.html() === '[+]') {
-      link.html('[-]');
-      Rails.ajax({
-        type: "GET",
-        url: "/tasks/" + id,
-        success: addRow,
-        error: function(response){alert( 'ERROR! Task not found' );}
-      });
+    let hiddenrow = link.closest("tbody").find(".remarks");
+    console.log(hiddenrow)
+    if(link.html() === "[+]") {
+      link.html("[-]");
+      hiddenrow.attr("class", "remarks");
     } else {
-      link.html('[+]');
-      hiddenrow.html('');
-    }
-
-    // add content to hidden row
-    function addRow(response) {
-      hiddenrow.html('<td colspan="3"</td><td>' + response + '</td>');
+      link.html("[+]");
+      hiddenrow.attr("class", "remarks hidden");
     }
   }
 
-  // given input_element, find parent form and submit it
-  // function submit_ajax(input_element) {
-  //   let form = input_element.closest('form');
-  //   Rails.fire(form[0], 'submit');
-  // }
+  function toggle_edit(event) {
+    $(this).closest(".task_overview").addClass("hidden");
+    let body = $(this).closest("tbody");
+    let toggle_expand = body.find(".toggle_expand");
+    if(toggle_expand.html() === "[-]") {
+      toggle_expand.click();
+    }
+    let form_container = body.find(".task_form_container");
+    form_container.removeClass("hidden");
+  }
 
-  toggle_links.click(toggle);
+  function cancel_update_form(event) {
+    $(this).closest(".task_form_container").addClass("hidden");
+    $(this).closest("tbody").find(".task_overview").removeClass("hidden");
+  }
 
-  // input_fields.keydown(function(event) {
-  //   if(event.which === 13) {
-  //     event.preventDefault();
-  //     submit_ajax($(this));
-  //   } else {}
-  // });
+  function toggle_new(event) {
+    $(".new_task_container").find(".task_form_container").removeClass("hidden");
+  }
 
-  // input_fields.blur(function(event) {
-  //   submit_ajax($(this));
-  // });
+  let toggle_expands = $(".toggle_expand");
+  toggle_expands.click(toggle_remark);
+
+  let toggle_edits = $(".toggle_edit");
+  toggle_edits.click(toggle_edit);
+
+  let cancel_form_links = $(".cancel_form_link");
+  cancel_form_links.click(cancel_update_form);
+
+  let toggle_new_button = $(".toggle_new");
+  toggle_new_button.click(toggle_new);
 });

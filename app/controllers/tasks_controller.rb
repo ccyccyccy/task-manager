@@ -8,19 +8,6 @@ class TasksController < ApplicationController
     @tags = @current_user.tags
   end
 
-  def show
-    @task = Task.find(params[:id])
-    if authenticate_user
-      render plain: @task.remarks 
-    else
-      redirect_to tasks_path
-    end
-  end
-
-  def new
-    @task = Task.new
-  end
-
   def edit
     @task = Task.find(params[:id])
     redirect_to tasks_path if !authenticate_user
@@ -31,7 +18,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path
     else 
-      render 'new' 
+      render 'new'
     end
   end
 

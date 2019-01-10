@@ -1,0 +1,8 @@
+function update_values(overview) {
+    overview.find(".task_title").html(" <%= @task.title %> ");
+    overview.closest("tbody").find(".task_remarks").html(" <%= @task.remarks %> ");
+    overview.find(".task_tags").html(` <%== get_tags @task %> `);
+}
+
+$("#<%= @task.id %>").find(".task_form_container").addClass("hidden");
+update_values($("#<%= @task.id %>").find(".task_overview").removeClass("hidden"));
