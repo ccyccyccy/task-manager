@@ -2,7 +2,6 @@ $( document ).on("turbolinks:load", function() {
   function toggle_remark(event) {
     let link = $(this); // link is the <a> tag
     let hiddenrow = link.closest("tbody").find(".remarks");
-    console.log(hiddenrow)
     if(link.html() === "[+]") {
       link.html("[-]");
       hiddenrow.attr("class", "remarks");

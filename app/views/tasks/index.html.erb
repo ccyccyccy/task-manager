@@ -13,37 +13,7 @@
     </tr>
   </thead>
   <% @tasks.order(@sort_order).each do |task| %>
-    <tbody id="<%= task.id %>">
-      <tr class="task_overview">
-        <td><a href="javascript:void(0)" class="toggle_edit">Edit</a></td>
-        <td><%= link_to 'Delete', task, 
-                remote: true,
-                method: :delete, 
-                data: {confirm: 'Are you sure?'} %></td>
-        <td><a href='javascript:void(0)' class="toggle_expand">[+]</a></td>
-        <td>
-          <span class="task_title"><%= task.title %></span>
-          Tags:
-          <span class="task_tags">
-            <%== get_tags task %>
-          </span>
-        </td>
-        <td class="date"><%= local_time(task.created_at) %></td>  
-      </tr>
-      <tr class="remarks hidden">
-        <td colspan="3"></td>
-        <td>
-          <span class="task_remarks"><%= task.remarks %></span>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="42">
-          <%# render partial: "form", locals: { full: true } or render "form", full: true %>
-          <%# they are the same %>
-          <%= render "form", task: task %>
-        </td>
-      </tr>
-    </tbody>
+    <%= render 'task_tbody', task: task %>
   <% end %>
 </table>
 
