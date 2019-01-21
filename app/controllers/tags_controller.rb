@@ -34,12 +34,8 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1
   def update
     @tag = Tag.find(params[:id])
-
-    if @tag.update(tag_params)
-      redirect_to @tag
-    else
-      render 'edit'
-    end
+    @tag.update(tag_params) if authenticate_user
+    redirect_to tasks_path
   end
 
   # DELETE /tags/1

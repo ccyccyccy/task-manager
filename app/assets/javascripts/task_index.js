@@ -26,6 +26,7 @@ $( document ).on("turbolinks:load", function() {
   }
 
   function cancel_update_form(event) {
+    event.preventDefault();
     $(this).closest(".task_form_container").addClass("d-none");
     $(this).closest("tbody").find(".task_overview").toggleClass("d-none");
     $(this).closest("tbody").find(".task_overview").toggleClass("d-flex");
@@ -36,11 +37,12 @@ $( document ).on("turbolinks:load", function() {
   }
 
   function toggle_new_tag(event) {
+    event.preventDefault();
     $("#new_tag_container").find(".tag_form_container").toggleClass("d-none");
   }
 
   function toggle_edit_tag(event) {
-    alert('ads.');
+    event.preventDefault();
     $(this).closest(".tag_container").find(".tag_form_container").toggleClass("d-none");
   }
 
@@ -56,7 +58,7 @@ $( document ).on("turbolinks:load", function() {
   let toggle_new_button = $("#toggle_new");
   toggle_new_button.click(toggle_new);
 
-  let toggle_new_tag_button = $("#toggle_new_tag")
+  let toggle_new_tag_button = $("#toggle_new_tag");
   toggle_new_tag_button.click(toggle_new_tag);
 
   let cancel_new_tag_form_link = $("#new_tag_container").find(".cancel_tag_form_link");
@@ -65,5 +67,6 @@ $( document ).on("turbolinks:load", function() {
   let toggle_edit_tag_button = $(".edit_tag");
   toggle_edit_tag_button.click(toggle_edit_tag);
 
-  let cancel_edit_tag_form_link = $("#tag_list").find(".cancel_tag_form_link")
+  let cancel_edit_tag_form_link = $("#tag_list").find(".cancel_tag_form_link");
+  cancel_edit_tag_form_link.click(toggle_edit_tag);
 });

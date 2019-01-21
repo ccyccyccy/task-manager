@@ -1,4 +1,4 @@
-<h1>Task Manager <button id="toggle_new", class="btn btn-primary">Add Task</button></h1>
+<h1>Task Manager <button id="toggle_new" class="btn btn-primary">Add Task</button></h1>
 <div class="new_task_container">
     <%= render 'form', task: Task.new %>
 </div>
@@ -6,7 +6,7 @@
 <%= render "task_list" %>
 
 <div class="tags">
-  <h2>Tags <button id="toggle_new_tag", class="btn btn-primary">New Tag</button></h2>
+  <h2>Tags <button id="toggle_new_tag" class="btn btn-primary">New Tag</button></h2>
   <div id="new_tag_container">
     <%= render "tags/form", tag: Tag.new %>
   </div>
@@ -16,7 +16,7 @@
       <div class="tag_container">
         <div class="tag_first_row">
           <%= link_to "Delete", tag, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <a class="edit_tag", href="javascript:void(0)">Edit</a>
+          <a class="edit_tag" href="javascript:void(0)">Edit</a>
           <%= link_to tag.name, tag %><br>
         </div>
         <div class="edit_tag_container">
