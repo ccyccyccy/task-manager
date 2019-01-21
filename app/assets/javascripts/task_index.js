@@ -27,12 +27,16 @@ $( document ).on("turbolinks:load", function() {
 
   function cancel_update_form(event) {
     $(this).closest(".task_form_container").addClass("d-none");
-    $(this).closest("tbody").find(".task_overview").removeClass("d-none");
-    $(this).closest("tbody").find(".task_overview").addClass("d-flex");
+    $(this).closest("tbody").find(".task_overview").toggleClass("d-none");
+    $(this).closest("tbody").find(".task_overview").toggleClass("d-flex");
   }
 
   function toggle_new(event) {
-    $(".new_task_container").find(".task_form_container").removeClass("d-none");
+    $(".new_task_container").find(".task_form_container").toggleClass("d-none");
+  }
+
+  function toggle_new_tag(event) {
+    $("#new_tag_container").find(".tag_form_container").toggleClass("d-none");
   }
 
   let toggle_expands = $(".toggle_expand");
@@ -44,6 +48,12 @@ $( document ).on("turbolinks:load", function() {
   let cancel_form_links = $(".cancel_form_link");
   cancel_form_links.click(cancel_update_form);
 
-  let toggle_new_button = $(".toggle_new");
+  let toggle_new_button = $("#toggle_new");
   toggle_new_button.click(toggle_new);
+
+  let toggle_new_tag_button = $("#toggle_new_tag")
+  toggle_new_tag_button.click(toggle_new_tag);
+
+  let cancel_tag_form_link = $(".cancel_tag_form_link");
+  cancel_tag_form_link.click(toggle_new_tag);
 });

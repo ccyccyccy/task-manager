@@ -1,23 +1,10 @@
-<% if @tag.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+<div class="tag_form_container d-none">
+  <%= form_with model: tag, remote: true, html: { autocomplete: "off" } do |form| %>
+    <p>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </p>
 
-    <ul>
-    <% @tag.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_with model: @tag, local: true do |form| %>
-  <p>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </p>
-
-  <p>
-    <%= form.submit %>
-  </p>
-
-<% end %>
+    <p><%= form.submit class: "btn btn-primary" %> <button class="cancel_tag_form_link btn btn-danger">Cancel</button></p>
+  <% end %>
+</div>

@@ -3,7 +3,6 @@ class TasksController < ApplicationController
   # respond_to :html, :js
 
   def index
-    @sort_order = params[:sort_order] ? params[:sort_order] : 'created_at desc'
     @tasks = @current_user.tasks
     @tags = @current_user.tags
   end

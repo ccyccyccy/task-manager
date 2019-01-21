@@ -13,7 +13,9 @@
     </td>
     <td class="col-2">
       <span class="task_tags">
-        <%== get_tags task %>
+        <% task.tags.each do |tag| %>
+          <%= link_to tag.name, tag %>
+        <% end %>
       </span>
     </td>
     <td class="date col-2"><%= local_time(task.created_at) %></td>  
@@ -31,7 +33,7 @@
     <td class="col-12">
       <%# render partial: "form", locals: { full: true } or render "form", full: true %>
       <%# they are the same %>
-      <%= render "form", task: task %>
+      <%= render "application/form", task: task %>
     </td>
   </tr>
 </tbody>

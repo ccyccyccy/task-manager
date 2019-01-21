@@ -1,0 +1,15 @@
+<div id="main">
+  <table id="table" class="table-hover" width="100%">
+    <thead>
+      <tr class="d-flex">
+        <th class="col-1"></th>
+        <th class="col-7"><%= link_to 'Title', tasks_path(sort_order: click_title_order) %></th>
+        <th class="col-2">Tags</th>
+        <th class="col-2"><%= link_to 'Created At', tasks_path(sort_order: click_date_order) %></th>
+      </tr>
+    </thead>
+    <% @tasks.order(@sort_order).each do |task| %>
+      <%= render 'task_tbody', task: task %>
+    <% end %>
+  </table>
+</div>

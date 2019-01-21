@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   # GET /tags/1
   def show
     @tag = Tag.find(params[:id])
-    authenticate_user
+    @tasks = @tag.tasks if authenticate_user
   end
 
   # GET /tags/new
@@ -56,6 +56,6 @@ class TagsController < ApplicationController
     end
 
     def authenticate_user
-      redirect_to root_path if @current_user.id != @tag.user_id
+      return @current_user.id == @tag.user_id
     end
 end

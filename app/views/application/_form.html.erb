@@ -6,11 +6,11 @@
     </p>
     <p>
       <%= form.label :remarks %>
-      <%= form.text_area :remarks %>
+      <%= form.text_area :remarks, size: "60x7" %>
     </p>
-    <p>
+    <p class="collection_check_boxes">
       <%= form.label :tags %>
-      <%= form.collection_check_boxes(:tag_ids, @current_user.tags, :id, :name) %>
+      <%= form.collection_check_boxes :tag_ids, @current_user.tags, :id, :name %>
     </p>
     <p><%= form.submit class: "btn btn-primary" %> <button class="cancel_form_link btn btn-danger">Cancel</button></p>
   <% end %>
