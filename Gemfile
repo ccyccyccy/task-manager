@@ -7,7 +7,8 @@ ruby '2.5.3'
 # Custom
 gem 'local_time'
 gem 'jquery-rails'
-gem 'responders'
+gem 'bootstrap', '~> 4.2.1'
+# gem 'responders'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use postgres as the database for Active Record
