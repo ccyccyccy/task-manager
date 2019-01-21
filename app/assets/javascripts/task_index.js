@@ -39,6 +39,11 @@ $( document ).on("turbolinks:load", function() {
     $("#new_tag_container").find(".tag_form_container").toggleClass("d-none");
   }
 
+  function toggle_edit_tag(event) {
+    alert('ads.');
+    $(this).closest(".tag_container").find(".tag_form_container").toggleClass("d-none");
+  }
+
   let toggle_expands = $(".toggle_expand");
   toggle_expands.click(toggle_remark);
 
@@ -54,6 +59,11 @@ $( document ).on("turbolinks:load", function() {
   let toggle_new_tag_button = $("#toggle_new_tag")
   toggle_new_tag_button.click(toggle_new_tag);
 
-  let cancel_tag_form_link = $(".cancel_tag_form_link");
-  cancel_tag_form_link.click(toggle_new_tag);
+  let cancel_new_tag_form_link = $("#new_tag_container").find(".cancel_tag_form_link");
+  cancel_new_tag_form_link.click(toggle_new_tag);
+
+  let toggle_edit_tag_button = $(".edit_tag");
+  toggle_edit_tag_button.click(toggle_edit_tag);
+
+  let cancel_edit_tag_form_link = $("#tag_list").find(".cancel_tag_form_link")
 });

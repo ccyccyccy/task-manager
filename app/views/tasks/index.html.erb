@@ -11,11 +11,19 @@
     <%= render "tags/form", tag: Tag.new %>
   </div>
 
-  <p>
+  <div id="tag_list">
     <% @tags.each do |tag| %>
-      <%= link_to "[X]", tag, method: :delete, data: { confirm: 'Are you sure?' } %> <%= link_to tag.name, tag %><br>
+      <div class="tag_container">
+        <div class="tag_first_row">
+          <%= link_to "Delete", tag, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <a class="edit_tag", href="javascript:void(0)">Edit</a>
+          <%= link_to tag.name, tag %><br>
+        </div>
+        <div class="edit_tag_container">
+          <%= render "tags/form", tag: tag %>
+        </div>
+      </div>
     <% end %>
-  </p>
-
+  </div>
   <br>
 </div>
