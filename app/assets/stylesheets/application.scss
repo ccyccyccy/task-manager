@@ -1,6 +1,15 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 
-.hidden {
-    display:none;
+body {
+    margin: 25px 25px 25px 25px;
+}
+
+#main {
+    margin: 25px 25px 25px 25px;   
+}
+
+.task_title {
+    font-size: 18px;
+    font-weight: bold;
 }

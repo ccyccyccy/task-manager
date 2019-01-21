@@ -1,4 +1,4 @@
-<div class="task_form_container hidden">
+<div class="task_form_container d-none">
   <%= form_with model: task, remote: true, html: { autocomplete: "off" } do |form| %>
     <p>
       <%= form.label :title %>
@@ -12,6 +12,6 @@
       <%= form.label :tags %>
       <%= form.collection_check_boxes(:tag_ids, @current_user.tags, :id, :name) %>
     </p>
-    <p><%= form.submit %> <a class="cancel_form_link" href="javascript:void(0)">Cancel</a></p>
+    <p><%= form.submit class: "btn btn-primary" %> <button class="cancel_form_link btn btn-danger">Cancel</button></p>
   <% end %>
 </div>

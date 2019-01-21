@@ -4,31 +4,35 @@ $( document ).on("turbolinks:load", function() {
     let hiddenrow = link.closest("tbody").find(".remarks");
     if(link.html() === "[+]") {
       link.html("[-]");
-      hiddenrow.attr("class", "remarks");
+      hiddenrow.removeClass("d-none");
+      hiddenrow.addClass("d-flex");
     } else {
       link.html("[+]");
-      hiddenrow.attr("class", "remarks hidden");
+      hiddenrow.removeClass("d-flex");
+      hiddenrow.addClass("d-none");
     }
   }
 
   function toggle_edit(event) {
-    $(this).closest(".task_overview").addClass("hidden");
+    $(this).closest(".task_overview").addClass("d-none");
+    $(this).closest(".task_overview").removeClass("d-flex");
     let body = $(this).closest("tbody");
     let toggle_expand = body.find(".toggle_expand");
     if(toggle_expand.html() === "[-]") {
       toggle_expand.click();
     }
     let form_container = body.find(".task_form_container");
-    form_container.removeClass("hidden");
+    form_container.removeClass("d-none");
   }
 
   function cancel_update_form(event) {
-    $(this).closest(".task_form_container").addClass("hidden");
-    $(this).closest("tbody").find(".task_overview").removeClass("hidden");
+    $(this).closest(".task_form_container").addClass("d-none");
+    $(this).closest("tbody").find(".task_overview").removeClass("d-none");
+    $(this).closest("tbody").find(".task_overview").addClass("d-flex");
   }
 
   function toggle_new(event) {
-    $(".new_task_container").find(".task_form_container").removeClass("hidden");
+    $(".new_task_container").find(".task_form_container").removeClass("d-none");
   }
 
   let toggle_expands = $(".toggle_expand");
