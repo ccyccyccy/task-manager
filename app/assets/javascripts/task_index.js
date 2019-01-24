@@ -1,42 +1,50 @@
+// some notes
+// d-flex and d-none cannot coexist
+// need to remove d-flex during add d-none and vice versa when toggling
+// initial class is either d-flex or d-none, not both
+
 $( document ).on("turbolinks:load", function() {
+
   function toggle_remark(event) {
-    let link = $(this); // link is the <a> tag
-    let hiddenrow = link.closest("tbody").find(".remarks");
-    if(link.html() === "[+]") {
-      link.html("[-]");
-      hiddenrow.removeClass("d-none");
-      hiddenrow.addClass("d-flex");
-    } else {
-      link.html("[+]");
-      hiddenrow.removeClass("d-flex");
-      hiddenrow.addClass("d-none");
-    }
+    let hiddenrow = $(this).closest("tbody").find(".remarks");
+
+    $(this).html() === "[+]" ? $(this).html("[-]") : $(this).html("[+]");
+    
+    hiddenrow.toggleClass("d-flex");
+    hiddenrow.toggleClass("d-none");
   }
 
+  // toggle edit, hide remarks if expanded
   function toggle_edit(event) {
-    $(this).closest(".task_overview").addClass("d-none");
-    $(this).closest(".task_overview").removeClass("d-flex");
+    let task_edit_form = $(this).closest(".task_overview");
+    task_edit_form.toggleClass("d-none");
+    task_edit_form.toggleClass("d-flex");
+
     let body = $(this).closest("tbody");
     let toggle_expand = body.find(".toggle_expand");
     if(toggle_expand.html() === "[-]") {
       toggle_expand.click();
     }
+
     let form_container = body.find(".task_form_container");
-    form_container.removeClass("d-none");
+    // form_container do not have d-flex
+    form_container.toggleClass("d-none");
   }
 
+  // hide form, unhide overview, vice versa
   function cancel_update_form(event) {
-    event.preventDefault();
-    $(this).closest(".task_form_container").addClass("d-none");
+    event.preventDefault(); // cancel button will trigger submit form for some reason. prevent this
+
+    $(this).closest(".task_form_container").toggleClass("d-none");
     $(this).closest("tbody").find(".task_overview").toggleClass("d-none");
     $(this).closest("tbody").find(".task_overview").toggleClass("d-flex");
   }
 
-  function toggle_new(event) {
+  function toggle_new_task_form(event) {
     $(".new_task_container").find(".task_form_container").toggleClass("d-none");
   }
 
-  function toggle_new_tag(event) {
+  function toggle_new_tag_form(event) {
     event.preventDefault();
     $("#new_tag_container").find(".tag_form_container").toggleClass("d-none");
   }
@@ -55,14 +63,14 @@ $( document ).on("turbolinks:load", function() {
   let cancel_form_links = $(".cancel_form_link");
   cancel_form_links.click(cancel_update_form);
 
-  let toggle_new_button = $("#toggle_new");
-  toggle_new_button.click(toggle_new);
+  let toggle_new_button = $("#toggle_new_task_form");
+  toggle_new_button.click(toggle_new_task_form);
 
   let toggle_new_tag_button = $("#toggle_new_tag");
-  toggle_new_tag_button.click(toggle_new_tag);
+  toggle_new_tag_button.click(toggle_new_tag_form);
 
   let cancel_new_tag_form_link = $("#new_tag_container").find(".cancel_tag_form_link");
-  cancel_new_tag_form_link.click(toggle_new_tag);
+  cancel_new_tag_form_link.click(toggle_new_tag_form);
 
   let toggle_edit_tag_button = $(".edit_tag");
   toggle_edit_tag_button.click(toggle_edit_tag);

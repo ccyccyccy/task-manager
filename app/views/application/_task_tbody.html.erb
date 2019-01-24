@@ -1,3 +1,7 @@
+<%# used to populate tasks table %>
+
+<%# within each tbody contains 3 rows. task_overview shown %>
+<%# task_remarks and task_form hidden by default %>
 <tbody id="<%= task.id %>">
   <tr class="task_overview d-flex">
     <td class="col-1">
@@ -31,7 +35,7 @@
 
   <tr class="d-flex">
     <td class="col-12">
-      <%# render partial: "form", locals: { full: true } or render "form", full: true %>
+      <%# render partial: "form", locals: { full: true } OR render "form", full: true %>
       <%# they are the same %>
       <%= render "application/form", task: task %>
     </td>
