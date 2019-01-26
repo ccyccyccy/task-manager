@@ -19,7 +19,7 @@
         <div class="tag_first_row">
           <a class="edit_tag" href="javascript:void(0)">Edit</a>
           <%= link_to "Delete", tag, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to tag.name, tag %><br>
+          <%= link_to tag.name, tag, {class: 'tag'} %><br>
         </div>
         <div class="edit_tag_container">
           <%= render "tags/form", tag: tag %>

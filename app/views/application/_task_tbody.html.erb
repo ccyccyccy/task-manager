@@ -18,7 +18,7 @@
     <td class="col-2">
       <span class="task_tags">
         <% task.tags.each do |tag| %>
-          <%= link_to tag.name, tag %>
+          <%= link_to tag.name, tag, {class: 'tag'} %>
         <% end %>
       </span>
     </td>
